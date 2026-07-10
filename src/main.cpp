@@ -8,12 +8,11 @@
 
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
-    "layout (location = 1) in vec3 aColor;\n"
     "out vec3 Color;\n"
     "void main()\n"
     "{\n"
     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-        "Color=aColor;\n"
+        "Color=aPos;"
     "}\0";
 
 const char *fragmentShaderSource="#version 330 core\n"
@@ -72,9 +71,9 @@ int main(void)
     
     
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,0.0f,0.2f,0.5f,
-        0.5f, -0.5f, 0.0f,0.125f,0.2f,0.125f,
-        0.0f,  0.5f, 0.0f,0.5f,0.0f,0.24f
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f,  0.5f, 0.0f
     };
 
     int  success;
@@ -87,11 +86,7 @@ int main(void)
     
     VBO.ExportData(vertices,sizeof(vertices),GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    VAO.setVertexAttribute(0,3, 6 * sizeof(float),(void*)0);
-    VAO.setVertexAttribute(1, 3, 6 * sizeof(float), (void*)(sizeof(float) * 3));
+    VAO.setVertexAttribute(0,3, 3 * sizeof(float),(void*)0);
 
 
     unsigned int FragmentShader,VertexShader;
@@ -147,6 +142,7 @@ int main(void)
     {
         /* Render here */
         // ✅ Теперь glClear работает!
+        glClearColor(22.f/255, 22.f/255, 22.f/255,1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
 
@@ -161,7 +157,7 @@ int main(void)
     }
 
     glUseProgram(0);
-        
+
     glDeleteProgram(shaderProgram);
     VBO.Clear();
     VAO.Clear();
