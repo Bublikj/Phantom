@@ -2,6 +2,7 @@
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include <iostream>  // Для вывода ошибок
+#include "../include/VertexBufferObject.hpp"
 
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
@@ -65,7 +66,8 @@ int main(void)
     // ✅ Теперь можно использовать OpenGL функции!
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     glViewport(0,0,SCR_WIDTH,SCR_HEIGHT);
-    unsigned int VBO,VAO;
+    
+    
     
     float vertices[] = {
         -0.5f, -0.5f, 0.0f,0.0f,0.2f,0.5f,
@@ -76,14 +78,16 @@ int main(void)
     int  success;
 
     char infoLog[512];
-
-    glGenBuffers(1,&VBO);
+    
+    unsigned int VAO;
+    VertexBufferObject VBO;
     glGenVertexArrays(1,&VAO);
     
     glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER,VBO);
+    
     
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    VBO.ExportData(vertices,sizeof(vertices),GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -163,7 +167,7 @@ int main(void)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     glDeleteProgram(shaderProgram);
-    glDeleteBuffers(1,&VBO);
+    VBO.Clear();
     glDeleteVertexArrays(1,&VAO);
     glfwTerminate();
     return 0;
