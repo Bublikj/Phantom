@@ -11,7 +11,7 @@ file(GLOB SOURCES "src/*.cpp")
 include_directories(include)
 
 # 5. Создание исполняемого файла
-add_executable(phantom ${SOURCES})
+add_executable(build/phantom ${SOURCES})
 
 # 6. (Опционально) Линковка сторонних библиотек
 # target_link_libraries(my_app PRIVATE имя_библиотеки)
