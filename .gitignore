@@ -1,69 +1,81 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-*.so.*
-
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Build directories
+# ===== СБОРКА =====
+# CMake
 build/
 Build/
 build-*/
-
-# CMake generated files
+cmake-build-*/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 Makefile
 install_manifest.txt
 compile_commands.json
+CMakeUserPresets.json
 
-# Temporary files
+# ===== ОБЪЕКТНЫЕ ФАЙЛЫ =====
+*.o
+*.obj
+*.lo
+*.slo
+*.d
+*.dwo
+
+# ===== БИБЛИОТЕКИ =====
+# Динамические
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Статические
+*.a
+*.la
+*.lib
+
+# ===== ИСПОЛНЯЕМЫЕ =====
+*.exe
+*.out
+*.app
+phantom
+Phantom
+PPMViewer
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.user
+*.suo
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# ===== ВРЕМЕННЫЕ ФАЙЛЫ =====
 *.tmp
 *.log
 *.bak
-*.swp
+*.cache
+*.tmp
 
-# vcpkg
-vcpkg_installed/
+# ===== СИСТЕМНЫЕ =====
+.DS_Store
+Thumbs.db
+desktop.ini
 
-# debug information files
-*.dwo
-
-# test output & cache
+# ===== ТЕСТЫ =====
 Testing/
 .cache/
+*.trs
+*.log
+
+# ===== ПРОЧЕЕ =====
+# vcpkg
+vcpkg_installed/
+packages/
+
+# Документация
+docs/_build/
+docs/html/
+docs/latex/
