@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>  // Для вывода ошибок
 #include "../include/VertexBufferObject.hpp"
+#include "../include/VertexArrayObject.hpp"
+
 
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
@@ -66,7 +68,7 @@ int main(void)
     // ✅ Теперь можно использовать OpenGL функции!
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     glViewport(0,0,SCR_WIDTH,SCR_HEIGHT);
-    
+
     
     
     float vertices[] = {
@@ -79,21 +81,18 @@ int main(void)
 
     char infoLog[512];
     
-    unsigned int VAO;
+    
     VertexBufferObject VBO;
-    glGenVertexArrays(1,&VAO);
+    VertexArrayObject VAO;
     
-    glBindVertexArray(VAO);
-    
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     VBO.ExportData(vertices,sizeof(vertices),GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float)*3));
-    glEnableVertexAttribArray(1);
+    VAO.setVertexAttribute(0,3, 6 * sizeof(float),(void*)0);
+    VAO.setVertexAttribute(1, 3, 6 * sizeof(float), (void*)(sizeof(float) * 3));
+
 
     unsigned int FragmentShader,VertexShader;
 
@@ -140,7 +139,6 @@ int main(void)
 
     glDeleteShader(VertexShader);
     glDeleteShader(FragmentShader);
-    glBindVertexArray(VAO);
     
     glfwSetWindowSizeCallback(window,CallBackResizeWindow);
 
@@ -153,7 +151,6 @@ int main(void)
 
 
         glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
         /* Swap front and back buffers */
@@ -162,13 +159,14 @@ int main(void)
         /* Poll for and process events */
         glfwPollEvents();
     }
+
     glUseProgram(0);
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     glDeleteProgram(shaderProgram);
     VBO.Clear();
-    glDeleteVertexArrays(1,&VAO);
+    VAO.Clear();
     glfwTerminate();
     return 0;
 }
