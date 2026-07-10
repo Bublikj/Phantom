@@ -1,6 +1,29 @@
 #include "../glad/glad.h"
+#include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include <iostream>  // Для вывода ошибок
+
+const char *vertexShaderSource = "#version 330 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
+
+const char *fragmentShaderSource="#version 330 core\n"
+"out vec4 FragColor;\n"
+
+"void main()\n"
+"{\n"
+"    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"}\0";
+
+#define SCR_WIDTH 800
+#define SCR_HEIGHT 600
+
+void CallBackResizeWindow(GLFWwindow *window,int width,int height){
+    glViewport(0,0,width, height);
+}
 
 int main(void)
 {
@@ -16,7 +39,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -36,6 +59,78 @@ int main(void)
 
     // ✅ Теперь можно использовать OpenGL функции!
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
+    glViewport(0,0,SCR_WIDTH,SCR_HEIGHT);
+    unsigned int VBO,VAO;
+    
+    float vertices[] = {
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f,  0.5f, 0.0f
+    };
+
+    int  success;
+
+    char infoLog[512];
+
+    glGenBuffers(1,&VBO);
+    glGenVertexArrays(1,&VAO);
+    
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER,VBO);
+    
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    unsigned int FragmentShader,VertexShader;
+
+    VertexShader=glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(VertexShader, 1, &vertexShaderSource, NULL);
+    glCompileShader(VertexShader);
+
+    FragmentShader=glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(FragmentShader, 1, &fragmentShaderSource, NULL);
+    glCompileShader(FragmentShader);
+    
+    glGetShaderiv(VertexShader, GL_COMPILE_STATUS, &success);
+
+    if(!success)
+    {
+        glGetShaderInfoLog(VertexShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+
+    glGetShaderiv(FragmentShader, GL_COMPILE_STATUS, &success);
+
+    if(!success)
+    {
+        glGetShaderInfoLog(FragmentShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+
+    unsigned int shaderProgram;
+    shaderProgram = glCreateProgram();
+
+    glAttachShader(shaderProgram, VertexShader);
+    glAttachShader(shaderProgram, FragmentShader);
+    glLinkProgram(shaderProgram);
+
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    
+    if(!success) {
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        std::cout << "ERROR::PROGRAM::LINK_FAILED\n" << infoLog << std::endl;
+
+    }
+
+    glUseProgram(shaderProgram);
+
+    glDeleteShader(VertexShader);
+    glDeleteShader(FragmentShader);
+    glBindVertexArray(VAO);
+    
+    glfwSetWindowSizeCallback(window,CallBackResizeWindow);
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -44,13 +139,24 @@ int main(void)
         // ✅ Теперь glClear работает!
         glClear(GL_COLOR_BUFFER_BIT);
 
+
+        glUseProgram(shaderProgram);
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
         /* Poll for and process events */
         glfwPollEvents();
     }
-
+    glUseProgram(0);
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    glDeleteProgram(shaderProgram);
+    glDeleteBuffers(1,&VBO);
+    glDeleteVertexArrays(1,&VAO);
     glfwTerminate();
     return 0;
 }
