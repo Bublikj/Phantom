@@ -74,12 +74,14 @@ int main(void)
         // first triangle
      0.5f,  0.5f, 0.0f,  // top right
      0.5f, -0.5f, 0.0f,  // bottom right
-    -0.5f,  0.5f, 0.0f,  // top left 
-    // second triangle
-     0.5f, -0.5f, 0.0f,  // bottom right
     -0.5f, -0.5f, 0.0f,  // bottom left
-    -0.5f,  0.5f, 0.0f   // top left
+    -0.5f,  0.5f, 0.0f // top left 
     };
+
+    unsigned int indices[] = {  // note that we start from 0!
+    0, 1, 3,   // first triangle
+    1, 2, 3    // second triangle
+    };  
 
     int  success;
 
@@ -89,7 +91,12 @@ int main(void)
     VertexBufferObject VBO;
     VertexArrayObject VAO;
     
+    unsigned int EBO;
+    glGenBuffers(1,&EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
+    
     VBO.ExportData(vertices,sizeof(vertices),GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW); 
 
     VAO.setVertexAttribute(0,3, 3 * sizeof(float),(void*)0);
 
@@ -152,8 +159,9 @@ int main(void)
 
 
         glUseProgram(shaderProgram);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        
+        VAO.Bind();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        VAO.Unbind();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
