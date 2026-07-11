@@ -14,6 +14,7 @@ set(SOURCES
     glad/glad.c
     src/VertexBufferObject.cpp
     src/VertexArrayObject.cpp
+    src/ElementBufferObject.cpp
     # Добавьте все ваши .cpp файлы
 )
 

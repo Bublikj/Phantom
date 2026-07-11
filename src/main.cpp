@@ -4,6 +4,8 @@
 #include <iostream>  // Для вывода ошибок
 #include "../include/VertexBufferObject.hpp"
 #include "../include/VertexArrayObject.hpp"
+#include "../include/ElementBufferObject.hpp"
+
 
 
 const char *vertexShaderSource = "#version 330 core\n"
@@ -90,13 +92,10 @@ int main(void)
     
     VertexBufferObject VBO;
     VertexArrayObject VAO;
-    
-    unsigned int EBO;
-    glGenBuffers(1,&EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
+    ElementBufferObject EBO;
     
     VBO.ExportData(vertices,sizeof(vertices),GL_STATIC_DRAW);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW); 
+    EBO.ExportData(indices,sizeof(indices));
 
     VAO.setVertexAttribute(0,3, 3 * sizeof(float),(void*)0);
 
@@ -174,6 +173,7 @@ int main(void)
     glDeleteProgram(shaderProgram);
     VBO.Clear();
     VAO.Clear();
+    EBO.Clear();
     glfwTerminate();
     return 0;
 }
