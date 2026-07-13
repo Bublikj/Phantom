@@ -5,6 +5,7 @@
 #include "../include/VertexBufferObject.hpp"
 #include "../include/VertexArrayObject.hpp"
 #include "../include/ElementBufferObject.hpp"
+#include "stdio.h"
 
 
 
@@ -174,6 +175,7 @@ int main(void)
     VBO.Clear();
     VAO.Clear();
     EBO.Clear();
+    system("pwd");
     glfwTerminate();
     return 0;
 }
