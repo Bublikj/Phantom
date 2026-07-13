@@ -16,6 +16,7 @@ set(SOURCES
     src/VertexArrayObject.cpp
     src/ElementBufferObject.cpp
     src/GLSLParser.cpp
+    src/Shader.cpp
     # Добавьте все ваши .cpp файлы
 )
 

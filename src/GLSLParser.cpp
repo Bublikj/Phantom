@@ -2,13 +2,13 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-void GLSLParser::Parse(const std::string &path, std::string &SourceFShader, std::string &SourceVShader){
+int GLSLParser::Parse(const std::string &path, std::string &SourceFShader, std::string &SourceVShader){
     
     std::ifstream stream(path);
     
     if (!stream.is_open()) {
         std::cerr << "Error: Could not open the file!" << std::endl;
-        return;
+        return 1;
     }
 
     std::ostringstream FragmentStream;
@@ -34,15 +34,16 @@ void GLSLParser::Parse(const std::string &path, std::string &SourceFShader, std:
 
     if(!IsDelimiter){
         std::cerr<<"Not found //SPLIT_SHADER in file "<<path<<std::endl;
-        return;
+        return 1;
     }
 
     if (SourceFShader.empty() || SourceVShader.empty()) {
         std::cerr<<"Shader is empty for source in file "<<path<<std::endl;
-        return;
+        return 1;
     }
     
     // 4. Close the file (optional, as the destructor does this automatically)
-    stream.close(); 
+    stream.close();
+    return 0;
 
 }

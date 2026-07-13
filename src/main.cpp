@@ -1,11 +1,11 @@
 #include "../glad/glad.h"
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
+#include <cstdlib>
 #include <iostream>  // Для вывода ошибок
 #include "../include/VertexBufferObject.hpp"
 #include "../include/VertexArrayObject.hpp"
 #include "../include/ElementBufferObject.hpp"
-#include "stdio.h"
 
 
 
@@ -175,7 +175,6 @@ int main(void)
     VBO.Clear();
     VAO.Clear();
     EBO.Clear();
-    system("pwd");
     glfwTerminate();
     return 0;
 }
