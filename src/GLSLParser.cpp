@@ -24,14 +24,13 @@ int GLSLParser::Parse(const std::string &path, std::string &SourceFShader, std::
             FragmentStream<<line<<"\n";
         }
     }
-
+    
     while (std::getline(stream, line)) {
         VertexStream<<line<<"\n";
     }
 
     SourceFShader=FragmentStream.str();
     SourceVShader=VertexStream.str();
-
     if(!IsDelimiter){
         std::cerr<<"Not found //SPLIT_SHADER in file "<<path<<std::endl;
         return 1;

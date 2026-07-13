@@ -24,7 +24,6 @@ public:
     void setVec3Int(const std::string &name,int x,int y,int z);
     void setVec4Int(const std::string &name,int x,int y,int z,int w);
     
-
     void setUInt(const std::string &name,unsigned int value);
     void setVec2UInt(const std::string &name,unsigned int x,unsigned int y);
     void setVec3UInt(const std::string &name,unsigned int x,unsigned int y,unsigned int z);

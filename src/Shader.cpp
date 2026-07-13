@@ -121,19 +121,40 @@ unsigned int Shader::CompileShader(const char* source,GLenum TypeShader){
         {
             glGetShaderInfoLog(ShaderID, 512, NULL, log);
             if(TypeShader==GL_FRAGMENT_SHADER){std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" <<log << std::endl;
-            return ProgramId;}
+            return ShaderID;}
             
             else if(TypeShader==GL_VERTEX_SHADER){std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" <<log << std::endl;
-            return ProgramId;}   
+            return ShaderID;}   
         }
 
-        return ProgramId;
+        return ShaderID;
 
 }
 
 unsigned int Shader::CreateProgram(unsigned int FragShader,unsigned int VertShader){
+    
     int success;
     char infoLog[512];
+
+    if (FragShader == 0 || VertShader == 0) {
+        std::cerr << "ERROR: Invalid shader ID passed to CreateProgram" << std::endl;
+        return 0;
+    }
+    
+    // 2. Проверка, что шейдеры скомпилированы
+    glGetShaderiv(VertShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        std::cerr << "ERROR: Vertex shader not compiled!" << std::endl;
+        return 0;
+    }
+    
+    glGetShaderiv(FragShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        std::cerr << "ERROR: Fragment shader not compiled!" << std::endl;
+        return 0;
+    }
+
+    
 
     unsigned int shaderProgram=0;
     shaderProgram = glCreateProgram();
