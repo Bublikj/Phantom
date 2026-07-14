@@ -108,10 +108,10 @@ int main(void)
 
     shader.UnUsing();
 
-    shader.Clear();
-    VBO.Clear();
-    VAO.Clear();
-    EBO.Clear();
+    //shader.Clear();
+    //VBO.Clear();
+    //VAO.Clear();
+    //EBO.Clear();
     glfwTerminate();
     return 0;
 }
