@@ -7,6 +7,7 @@
 #include "../include/VertexArrayObject.hpp"
 #include "../include/ElementBufferObject.hpp"
 #include "../include/Shader.hpp"
+#include "../include/Window.hpp"
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 600
@@ -65,11 +66,6 @@ int main(void)
     0, 1, 3,   // first triangle
     1, 2, 3    // second triangle
     };  
-
-    int  success;
-
-    char infoLog[512];
-    
     
     VertexBufferObject VBO;
     VertexArrayObject VAO;
@@ -79,7 +75,6 @@ int main(void)
     EBO.ExportData(indices,sizeof(indices));
 
     VAO.setVertexAttribute(0,3, 3 * sizeof(float),(void*)0);
-
 
     Shader shader("../shaders/default.glsl");
     
@@ -95,13 +90,11 @@ int main(void)
 
         shader.setFloat("iTime",glfwGetTime());
         shader.Using();
-        
         VAO.Bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         VAO.Unbind();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
-
         /* Poll for and process events */
         glfwPollEvents();
     }
