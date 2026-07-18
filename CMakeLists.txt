@@ -17,6 +17,7 @@ set(SOURCES
     src/ElementBufferObject.cpp
     src/GLSLParser.cpp
     src/Shader.cpp
+    src/Window.cpp
     # Добавьте все ваши .cpp файлы
 )
 

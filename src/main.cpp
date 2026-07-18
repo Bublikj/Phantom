@@ -1,7 +1,6 @@
 #include "../glad/glad.h"
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
-#include <cstdlib>
 #include <iostream>  // Для вывода ошибок
 #include "../include/VertexBufferObject.hpp"
 #include "../include/VertexArrayObject.hpp"
@@ -16,35 +15,31 @@ void CallBackResizeWindow(GLFWwindow *window,int width,int height){
     glViewport(0,0,width, height);
 }
 
-int main(void)
-{
-    GLFWwindow* window;
-
-    /* Initialize the library */
-    if (!glfwInit())
-        return -1;
-
-    // ✅ Настройка версии OpenGL (важно!)
+void InitGL(){
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+}
 
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
+int main(void)
+{
+    if (!glfwInit())
         return -1;
-    }
+    
+    InitGL();
+    
+    Window window(SCR_WIDTH,SCR_HEIGHT,"Phantom");
 
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
+    /* Initialize the library */
+    
+    /* Create a windowed mode window and its OpenGL context */
+    window.makeContext();
 
     // ✅ ИНИЦИАЛИЗИРУЕМ GLAD!
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cerr << "Failed to initialize GLAD" << std::endl;
-        glfwTerminate();
+        window.Destroy();
         return -1;
     }
 
@@ -78,15 +73,15 @@ int main(void)
 
     Shader shader("../shaders/default.glsl");
     
-    glfwSetWindowSizeCallback(window,CallBackResizeWindow);
+    window.setCallbackSizeWindow(CallBackResizeWindow);
     shader.Using();
     /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
+    while (!window.ShouldClose())
     {
         /* Render here */
-        // ✅ Теперь glClear работает!
-        glClearColor(22.f/255, 22.f/255, 22.f/255,1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        // ✅ Теперь 
+        // glClear работает!
+        window.clearBackround(22.f/255, 22.f/255, 22.f/255,1.0f);
 
         shader.setFloat("iTime",glfwGetTime());
         shader.Using();
@@ -94,9 +89,9 @@ int main(void)
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         VAO.Unbind();
         /* Swap front and back buffers */
-        glfwSwapBuffers(window);
+        window.SwapBuffers();
         /* Poll for and process events */
-        glfwPollEvents();
+        window.PollEvents();
     }
 
     shader.UnUsing();
@@ -105,6 +100,6 @@ int main(void)
     //VBO.Clear();
     //VAO.Clear();
     //EBO.Clear();
-    glfwTerminate();
+    window.Destroy();
     return 0;
 }
