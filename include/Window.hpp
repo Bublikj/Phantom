@@ -1,6 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <string>
-
+namespace Phantom {
 class Window{
 public:
     Window(int width,int height,std::string title);
@@ -25,3 +25,4 @@ public:
 private:
     GLFWwindow* m_window;
 };
+}

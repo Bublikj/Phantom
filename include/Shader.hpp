@@ -1,6 +1,7 @@
 #include <string>
 #include "../glad/glad.h"
 #include <iostream>
+namespace Phantom {
 class Shader{
 public:
     Shader(const std::string &path);
@@ -45,3 +46,4 @@ private:
     unsigned int CompileShader(const char* source,GLenum TypeShader);
     unsigned int CreateProgram(unsigned int FragShader,unsigned int VertShader);
 };
+}

@@ -26,7 +26,7 @@ int MainApplication::execute(int argc, char *argv[]){
 
     InitGL();
 
-    Window window(SCR_WIDTH, SCR_HEIGHT, "Phantom");
+    Phantom::Window window(SCR_WIDTH, SCR_HEIGHT, "Phantom");
 
     window.makeContext();
 
@@ -44,16 +44,16 @@ int MainApplication::execute(int argc, char *argv[]){
 
     unsigned int indices[] = {0, 1, 3, 1, 2, 3};
 
-    VertexBufferObject VBO;
-    VertexArrayObject VAO;
-    ElementBufferObject EBO;
+    Phantom::VertexBufferObject VBO;
+    Phantom::VertexArrayObject VAO;
+    Phantom::ElementBufferObject EBO;
 
     VBO.ExportData(vertices, sizeof(vertices), GL_STATIC_DRAW);
     EBO.ExportData(indices, sizeof(indices));
 
     VAO.setVertexAttribute(0, 3, 3 * sizeof(float), (void *)0);
 
-    Shader shader("../shaders/default.glsl");
+    Phantom::Shader shader("../shaders/default.glsl");
 
     window.setCallbackSizeWindow(CallBackResizeWindow);
     shader.Using();

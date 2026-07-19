@@ -1,5 +1,6 @@
 #include "../glad/glad.h"
 #include <cstddef> // для size_t
+namespace Phantom {
 
 class ElementBufferObject{
 public:
@@ -13,3 +14,4 @@ public:
 private:
     unsigned int GLID;
 };
+}

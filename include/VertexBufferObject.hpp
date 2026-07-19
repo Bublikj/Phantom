@@ -1,6 +1,7 @@
 
 #include "../glad/glad.h"
 #include <cstddef> // для size_t
+namespace Phantom {
 
 class VertexBufferObject{
 public:
@@ -14,3 +15,4 @@ public:
 private:
     unsigned int GLID;
 };
+}

@@ -1,39 +1,34 @@
 #include "../include/VertexArrayObject.hpp"
 #include "../glad/glad.h"
 
-void VertexArrayObject::Bind(){
-    glBindVertexArray(GLID);
+void Phantom::VertexArrayObject::Bind() { glBindVertexArray(GLID); }
+
+void Phantom::VertexArrayObject::Unbind() { glBindVertexArray(0); }
+
+void Phantom::VertexArrayObject::Clear() {
+  Unbind();
+  glDeleteVertexArrays(1, &GLID);
 }
 
-void VertexArrayObject::Unbind(){
-    glBindVertexArray(0);
+unsigned int Phantom::VertexArrayObject::getGLID() { return GLID; }
+
+Phantom::VertexArrayObject::VertexArrayObject() {
+  glGenVertexArrays(1, &GLID);
+  Bind();
 }
 
-void VertexArrayObject::Clear(){
-    Unbind();
-    glDeleteVertexArrays(1,&GLID);
-}
+Phantom::VertexArrayObject::~VertexArrayObject() { Clear(); }
 
-unsigned int VertexArrayObject::getGLID(){ 
-    return GLID;
-}
-
-VertexArrayObject::VertexArrayObject(){
-    glGenVertexArrays(1,&GLID);
-    Bind();
-}
-
-VertexArrayObject::~VertexArrayObject(){
-    Clear();
-}
-
-void VertexArrayObject::setVertexAttribute(unsigned int Index,unsigned int Size,size_t Stride,const void* Pointer,GLenum TypeData,GLenum Normalized){
-    Bind();
-    glVertexAttribPointer(Index, Size,TypeData,Normalized,Stride,Pointer);
-    glEnableVertexAttribArray(Index);
+void Phantom::VertexArrayObject::setVertexAttribute(
+    unsigned int Index, unsigned int Size, size_t Stride, const void *Pointer,
+    GLenum TypeData, GLenum Normalized) {
+  Bind();
+  glVertexAttribPointer(Index, Size, TypeData, Normalized, Stride, Pointer);
+  glEnableVertexAttribArray(Index);
 };
 
-void VertexArrayObject::DrawElements(unsigned int elements,GLenum TypeDraw,GLenum TypeData,const void* pointer){
-     glDrawElements(TypeDraw, elements, TypeData, pointer);
+void Phantom::VertexArrayObject::DrawElements(unsigned int elements,
+                                              GLenum TypeDraw, GLenum TypeData,
+                                              const void *pointer) {
+  glDrawElements(TypeDraw, elements, TypeData, pointer);
 }
-

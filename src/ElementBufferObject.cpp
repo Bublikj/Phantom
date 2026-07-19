@@ -2,33 +2,30 @@
 #include "../glad/glad.h"
 #include <cstddef>
 
-void ElementBufferObject::Bind(){
+void Phantom::ElementBufferObject::Bind(){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,GLID);
 }
 
-void ElementBufferObject::UnBind(){
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+void Phantom::ElementBufferObject::UnBind() {
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void ElementBufferObject::ExportData(void* Data,size_t Size,GLenum TypeDraw){
-    Bind();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Size, Data,TypeDraw);
+void Phantom::ElementBufferObject::ExportData(void *Data, size_t Size,
+                                              GLenum TypeDraw) {
+  Bind();
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, Size, Data, TypeDraw);
 }
 
-void ElementBufferObject::Clear(){
-    UnBind();
-    glDeleteBuffers(1,&GLID);
+void Phantom::ElementBufferObject::Clear() {
+  UnBind();
+  glDeleteBuffers(1, &GLID);
 }
 
-unsigned int ElementBufferObject::getGLID(){
-    return GLID;
+unsigned int Phantom::ElementBufferObject::getGLID() { return GLID; }
+
+Phantom::ElementBufferObject::ElementBufferObject() {
+  glGenBuffers(1, &GLID);
+  Bind();
 }
 
-ElementBufferObject::ElementBufferObject(){
-    glGenBuffers(1,&GLID);
-    Bind();
-}
-
-ElementBufferObject::~ElementBufferObject(){
-    Clear();
-}
+Phantom::ElementBufferObject::~ElementBufferObject() { Clear(); }
