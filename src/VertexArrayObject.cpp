@@ -32,3 +32,7 @@ void Phantom::VertexArrayObject::DrawElements(unsigned int elements,
                                               const void *pointer) {
   glDrawElements(TypeDraw, elements, TypeData, pointer);
 }
+
+void Phantom::VertexArrayObject::DrawArrays(unsigned int count, int first,GLenum TypeDraw){
+  glDrawArrays(TypeDraw, 0, count);
+}

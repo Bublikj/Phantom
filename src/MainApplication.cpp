@@ -7,6 +7,8 @@
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include "../include/MainApplication.hpp"
+#include "../include/Mesh.hpp"
+
 void CallBackResizeWindow(GLFWwindow *window, int width, int height) {
   glViewport(0, 0, width, height);
 }

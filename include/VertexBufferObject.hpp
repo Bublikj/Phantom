@@ -1,4 +1,4 @@
-
+#pragma once
 #include "../glad/glad.h"
 #include <cstddef> // для size_t
 namespace Phantom {

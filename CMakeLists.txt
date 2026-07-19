@@ -18,7 +18,8 @@ set(SOURCES
     src/GLSLParser.cpp
     src/Shader.cpp
     src/Window.cpp
-    src/MainApplication
+    src/MainApplication.cpp
+    src/Mesh.cpp
     # Добавьте все ваши .cpp файлы
 )
 
