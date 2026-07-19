@@ -33,3 +33,7 @@ void VertexArrayObject::setVertexAttribute(unsigned int Index,unsigned int Size,
     glEnableVertexAttribArray(Index);
 };
 
+void VertexArrayObject::DrawElements(unsigned int elements,GLenum TypeDraw,GLenum TypeData,const void* pointer){
+     glDrawElements(TypeDraw, elements, TypeData, pointer);
+}
+

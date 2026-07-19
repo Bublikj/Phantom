@@ -30,12 +30,8 @@ int main(void)
     
     Window window(SCR_WIDTH,SCR_HEIGHT,"Phantom");
 
-    /* Initialize the library */
-    
-    /* Create a windowed mode window and its OpenGL context */
     window.makeContext();
 
-    // ✅ ИНИЦИАЛИЗИРУЕМ GLAD!
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cerr << "Failed to initialize GLAD" << std::endl;
@@ -43,23 +39,21 @@ int main(void)
         return -1;
     }
 
-    // ✅ Теперь можно использовать OpenGL функции!
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     glViewport(0,0,SCR_WIDTH,SCR_HEIGHT);
 
     
     
     float vertices[] = {
-        // first triangle
-     1.0f,  1.0f, 0.0f,  // top right
-     1.0f, -1.0f, 0.0f,  // bottom right
-    -1.0f, -1.0f, 0.0f,  // bottom left
-    -1.0f,  1.0f, 0.0f // top left 
+     1.0f,  1.0f, 0.0f,
+     1.0f, -1.0f, 0.0f,
+    -1.0f, -1.0f, 0.0f,
+    -1.0f,  1.0f, 0.0f
     };
 
-    unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 3,   // first triangle
-    1, 2, 3    // second triangle
+    unsigned int indices[] = {
+    0, 1, 3,
+    1, 2, 3
     };  
     
     VertexBufferObject VBO;
@@ -75,22 +69,16 @@ int main(void)
     
     window.setCallbackSizeWindow(CallBackResizeWindow);
     shader.Using();
-    /* Loop until the user closes the window */
     while (!window.ShouldClose())
     {
-        /* Render here */
-        // ✅ Теперь 
-        // glClear работает!
         window.clearBackround(22.f/255, 22.f/255, 22.f/255,1.0f);
 
         shader.setFloat("iTime",glfwGetTime());
         shader.Using();
         VAO.Bind();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        VAO.DrawElements(6);
         VAO.Unbind();
-        /* Swap front and back buffers */
         window.SwapBuffers();
-        /* Poll for and process events */
         window.PollEvents();
     }
 
