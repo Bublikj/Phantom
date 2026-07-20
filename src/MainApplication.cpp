@@ -1,13 +1,12 @@
 #include "../glad/glad.h"
-#include "../include/ElementBufferObject.hpp"
 #include "../include/Shader.hpp"
-#include "../include/VertexArrayObject.hpp"
-#include "../include/VertexBufferObject.hpp"
 #include "../include/Window.hpp"
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include "../include/MainApplication.hpp"
 #include "../include/Mesh.hpp"
+#include <vector>
+#include <iostream>
 
 void CallBackResizeWindow(GLFWwindow *window, int width, int height) {
   glViewport(0, 0, width, height);
@@ -23,52 +22,49 @@ void InitGL() {
 #define SCR_HEIGHT 600
 
 int MainApplication::execute(int argc, char *argv[]){
-    if (!glfwInit())
-        return -1;
+      if (!glfwInit())
+          return -1;
 
-    InitGL();
+      InitGL();
 
-    Phantom::Window window(SCR_WIDTH, SCR_HEIGHT, "Phantom");
+      Phantom::Window window(SCR_WIDTH, SCR_HEIGHT, "Phantom");
 
-    window.makeContext();
+      window.makeContext();
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
-        window.Destroy();
-        return -1;
-    }
+      if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+          std::cerr << "Failed to initialize GLAD" << std::endl;
+          window.Destroy();
+          return -1;
+      }
 
-    std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
-    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+      glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 
-    float vertices[] = {1.0f,  1.0f,  0.0f, 1.0f,  -1.0f, 0.0f,
-                        -1.0f, -1.0f, 0.0f, -1.0f, 1.0f,  0.0f};
+      std::vector<float> Vertices = {1.0f,  1.0f,  0.0f,
+                                    1.0f,  -1.0f, 0.0f,
+                                    -1.0f, -1.0f, 0.0f,
+                                      -1.0f, 1.0f,  0.0f};
 
-    unsigned int indices[] = {0, 1, 3, 1, 2, 3};
+      std::vector<unsigned int> Indices = {0, 1, 3, 1, 2, 3};
 
-    Phantom::VertexBufferObject VBO;
-    Phantom::VertexArrayObject VAO;
-    Phantom::ElementBufferObject EBO;
+      Phantom::Mesh mesh(Vertices,Indices);
 
-    VBO.ExportData(vertices, sizeof(vertices), GL_STATIC_DRAW);
-    EBO.ExportData(indices, sizeof(indices));
+      Phantom::Shader shader("../shaders/default.glsl");
 
-    VAO.setVertexAttribute(0, 3, 3 * sizeof(float), (void *)0);
+      window.setCallbackSizeWindow(CallBackResizeWindow);
+      shader.Using();
+      
+      while (!window.ShouldClose()) {
+        
+        window.clearBackround(22.f / 255, 22.f / 255, 22.f / 255, 1.0f);
 
-    Phantom::Shader shader("../shaders/default.glsl");
+        shader.setFloat("iTime", glfwGetTime());
+        shader.Using();
+        
+        mesh.Draw();
 
-    window.setCallbackSizeWindow(CallBackResizeWindow);
-    shader.Using();
-    while (!window.ShouldClose()) {
-    window.clearBackround(22.f / 255, 22.f / 255, 22.f / 255, 1.0f);
+        window.SwapBuffers();
+        window.PollEvents();
 
-    shader.setFloat("iTime", glfwGetTime());
-    shader.Using();
-    VAO.Bind();
-    VAO.DrawElements(6);
-    VAO.Unbind();
-    window.SwapBuffers();
-    window.PollEvents();
   }
 
     shader.UnUsing();

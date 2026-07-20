@@ -62,7 +62,7 @@ void Phantom::Mesh::Draw(unsigned int count) {
     VAO.DrawArrays(count,0,drawMode);
   }
 
-  glBindVertexArray(0);
+  VAO.Unbind();
 }
 
 void Phantom::Mesh::SetVertices(const std::vector<float> &newVertices) {
