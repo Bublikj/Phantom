@@ -1,5 +1,5 @@
-#include "../include/ElementBufferObject.hpp"
-#include "../glad/glad.h"
+#include "../../include/Graphic/ElementBufferObject.hpp"
+#include "../../glad/glad.h"
 #include <cstddef>
 
 void Phantom::Graphic::ElementBufferObject::Bind() {

@@ -12,13 +12,13 @@ set(SOURCES
     
     src/main.cpp
     glad/glad.c
-    src/VertexBufferObject.cpp
-    src/VertexArrayObject.cpp
-    src/ElementBufferObject.cpp
-    src/GLSLParser.cpp
-    src/Shader.cpp
-    src/Window.cpp
-    src/MainApplication.cpp
+    src/Graphic/VertexBufferObject.cpp
+    src/Graphic/VertexArrayObject.cpp
+    src/Graphic/ElementBufferObject.cpp
+    src/Core/GLSLParser.cpp
+    src/Graphic/Shader.cpp
+    src/Core/Window.cpp
+    src/Core/MainApplication.cpp
     # Добавьте все ваши .cpp файлы
 )
 

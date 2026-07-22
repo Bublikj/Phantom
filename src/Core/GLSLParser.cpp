@@ -1,7 +1,8 @@
-#include"../include/GLSLParser.hpp"
+#include"../../include/Core/GLSLParser.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
 int Phantom::GLSLParser::Parse(const std::string &path,
                                std::string &SourceFShader,
                                std::string &SourceVShader) {

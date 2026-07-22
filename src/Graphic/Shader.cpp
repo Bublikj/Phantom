@@ -1,6 +1,6 @@
-#include "../include/Shader.hpp"
-#include "../glad/glad.h"
-#include "../include/GLSLParser.hpp"
+#include "../../include/Graphic/Shader.hpp"
+#include "../../glad/glad.h"
+#include "../../include/Core/GLSLParser.hpp"
 #include <iostream>
 Phantom::Shader::Shader() {}
 

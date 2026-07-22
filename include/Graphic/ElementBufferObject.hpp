@@ -1,12 +1,15 @@
 #pragma once
-#include "../glad/glad.h"
+#include "../../glad/glad.h"
 #include <cstddef> // для size_t
 namespace Phantom {
+
 namespace Graphic {
-class VertexBufferObject{
+
+
+class ElementBufferObject{
 public:
-    VertexBufferObject();
-    ~VertexBufferObject();
+    ElementBufferObject();
+    ~ElementBufferObject();
     void Bind();
     unsigned int getGLID();
     void UnBind();
@@ -15,5 +18,6 @@ public:
 private:
     unsigned int GLID;
 };
-}
+
+};
 }

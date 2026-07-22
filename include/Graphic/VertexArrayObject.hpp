@@ -1,5 +1,5 @@
 #pragma once
-#include "../glad/glad.h"
+#include "../../glad/glad.h"
 #include <cstddef>
 namespace Phantom {
 namespace Graphic {

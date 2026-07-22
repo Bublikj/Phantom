@@ -1,4 +1,4 @@
-#include "../include/MainApplication.hpp"
+#include "../include/Core/MainApplication.hpp"
 
 int main(int argc, char **argv) {
   MainApplication app;

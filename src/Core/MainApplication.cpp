@@ -1,10 +1,10 @@
-#include "../include/MainApplication.hpp"
-#include "../glad/glad.h"
-#include "../include/ElementBufferObject.hpp"
-#include "../include/Shader.hpp"
-#include "../include/VertexArrayObject.hpp"
-#include "../include/VertexBufferObject.hpp"
-#include "../include/Window.hpp"
+#include "../../include/Core/MainApplication.hpp"
+#include "../../glad/glad.h"
+#include "../../include/Graphic/ElementBufferObject.hpp"
+#include "../../include/Graphic/Shader.hpp"
+#include "../../include/Graphic/VertexArrayObject.hpp"
+#include "../../include/Graphic/VertexBufferObject.hpp"
+#include "../../include/Core/Window.hpp"
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include <iostream>

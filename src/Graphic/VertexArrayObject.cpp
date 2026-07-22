@@ -1,5 +1,5 @@
-#include "../include/VertexArrayObject.hpp"
-#include "../glad/glad.h"
+#include "../../glad/glad.h"
+#include "../../include/Graphic/VertexArrayObject.hpp"
 
 void Phantom::Graphic::VertexArrayObject::Bind() { glBindVertexArray(GLID); }
 
