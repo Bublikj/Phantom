@@ -3,6 +3,9 @@
 #include <cstddef> // для size_t
 namespace Phantom {
 
+namespace Graphic {
+
+
 class ElementBufferObject{
 public:
     ElementBufferObject();
@@ -14,5 +17,7 @@ public:
     void ExportData(void* Data,size_t Size,GLenum TypeDraw=GL_STATIC_DRAW);
 private:
     unsigned int GLID;
+};
+
 };
 }

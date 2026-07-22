@@ -1,25 +1,25 @@
 #include "../include/VertexArrayObject.hpp"
 #include "../glad/glad.h"
 
-void Phantom::VertexArrayObject::Bind() { glBindVertexArray(GLID); }
+void Phantom::Graphic::VertexArrayObject::Bind() { glBindVertexArray(GLID); }
 
-void Phantom::VertexArrayObject::Unbind() { glBindVertexArray(0); }
+void Phantom::Graphic::VertexArrayObject::Unbind() { glBindVertexArray(0); }
 
-void Phantom::VertexArrayObject::Clear() {
+void Phantom::Graphic::VertexArrayObject::Clear() {
   Unbind();
   glDeleteVertexArrays(1, &GLID);
 }
 
-unsigned int Phantom::VertexArrayObject::getGLID() { return GLID; }
+unsigned int Phantom::Graphic::VertexArrayObject::getGLID() { return GLID; }
 
-Phantom::VertexArrayObject::VertexArrayObject() {
+Phantom::Graphic::VertexArrayObject::VertexArrayObject() {
   glGenVertexArrays(1, &GLID);
   Bind();
 }
 
-Phantom::VertexArrayObject::~VertexArrayObject() { Clear(); }
+Phantom::Graphic::VertexArrayObject::~VertexArrayObject() { Clear(); }
 
-void Phantom::VertexArrayObject::setVertexAttribute(
+void Phantom::Graphic::VertexArrayObject::setVertexAttribute(
     unsigned int Index, unsigned int Size, size_t Stride, const void *Pointer,
     GLenum TypeData, GLenum Normalized) {
   Bind();
@@ -27,12 +27,15 @@ void Phantom::VertexArrayObject::setVertexAttribute(
   glEnableVertexAttribArray(Index);
 };
 
-void Phantom::VertexArrayObject::DrawElements(unsigned int elements,
-                                              GLenum TypeDraw, GLenum TypeData,
-                                              const void *pointer) {
+void Phantom::Graphic::VertexArrayObject::DrawElements(unsigned int elements,
+                                                       GLenum TypeDraw,
+                                                       GLenum TypeData,
+                                                       const void *pointer) {
   glDrawElements(TypeDraw, elements, TypeData, pointer);
 }
 
-void Phantom::VertexArrayObject::DrawArrays(unsigned int count, int first,GLenum TypeDraw){
+void Phantom::Graphic::VertexArrayObject::DrawArrays(unsigned int count,
+                                                     int first,
+                                                     GLenum TypeDraw) {
   glDrawArrays(TypeDraw, 0, count);
 }

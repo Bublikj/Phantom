@@ -19,7 +19,6 @@ set(SOURCES
     src/Shader.cpp
     src/Window.cpp
     src/MainApplication.cpp
-    src/Mesh.cpp
     # Добавьте все ваши .cpp файлы
 )
 

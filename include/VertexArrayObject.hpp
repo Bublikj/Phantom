@@ -2,6 +2,8 @@
 #include "../glad/glad.h"
 #include <cstddef>
 namespace Phantom {
+namespace Graphic {
+
 
 class VertexArrayObject{
 public:
@@ -18,4 +20,5 @@ public:
 private:
     unsigned int GLID;
 };
+}
 }
