@@ -19,6 +19,7 @@ set(SOURCES
     src/Graphic/Shader.cpp
     src/Core/Window.cpp
     src/Core/MainApplication.cpp
+    src/Graphic/RenderContext.cpp
     # Добавьте все ваши .cpp файлы
 )
 

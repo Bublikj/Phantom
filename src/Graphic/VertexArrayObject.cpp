@@ -14,7 +14,6 @@ unsigned int Phantom::Graphic::VertexArrayObject::getGLID() { return GLID; }
 
 Phantom::Graphic::VertexArrayObject::VertexArrayObject() {
   glGenVertexArrays(1, &GLID);
-  Bind();
 }
 
 Phantom::Graphic::VertexArrayObject::~VertexArrayObject() { Clear(); }

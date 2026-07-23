@@ -2,11 +2,11 @@
 #include "../../glad/glad.h"
 #include "../../include/Core/GLSLParser.hpp"
 #include <iostream>
-Phantom::Shader::Shader() {}
+Phantom::Graphic::Shader::Shader() {}
 
-Phantom::Shader::Shader(const std::string &path) { Setup(path); }
+Phantom::Graphic::Shader::Shader(const std::string &path) { Setup(path); }
 
-void Phantom::Shader::Setup(const std::string &path) {
+void Phantom::Graphic::Shader::Setup(const std::string &path) {
   std::string fragmentShaderSource = "";
   std::string vertexShaderSource = "";
 
@@ -23,90 +23,92 @@ void Phantom::Shader::Setup(const std::string &path) {
   }
 }
 
-void Phantom::Shader::Clear() {
+void Phantom::Graphic::Shader::Clear() {
   UnUsing();
   glDeleteProgram(ProgramId);
 }
 
-void Phantom::Shader::Using() { glUseProgram(ProgramId); }
+void Phantom::Graphic::Shader::Using() { glUseProgram(ProgramId); }
 
-void Phantom::Shader::UnUsing() { glUseProgram(0); }
+void Phantom::Graphic::Shader::UnUsing() {
+  glUseProgram(0);
+}
 
-void Phantom::Shader::setInt(const std::string &name, int value) {
+void Phantom::Graphic::Shader::setInt(const std::string &name, int value) {
   glUniform1i(glGetUniformLocation(ProgramId, name.c_str()), value);
 }
 
-void Phantom::Shader::setVec2Int(const std::string &name, int x, int y) {
+void Phantom::Graphic::Shader::setVec2Int(const std::string &name, int x, int y) {
   glUniform2i(glGetUniformLocation(ProgramId, name.c_str()), x, y);
 }
 
-void Phantom::Shader::setVec3Int(const std::string &name, int x, int y, int z) {
+void Phantom::Graphic::Shader::setVec3Int(const std::string &name, int x, int y, int z) {
   glUniform3i(glGetUniformLocation(ProgramId, name.c_str()), x, y, z);
 }
 
-void Phantom::Shader::setVec4Int(const std::string &name, int x, int y, int z,
+void Phantom::Graphic::Shader::setVec4Int(const std::string &name, int x, int y, int z,
                                  int w) {
   glUniform4i(glGetUniformLocation(ProgramId, name.c_str()), x, y, z, w);
 }
 
-void Phantom::Shader::setFloat(const std::string &name, float value) {
+void Phantom::Graphic::Shader::setFloat(const std::string &name, float value) {
   glUniform1f(glGetUniformLocation(ProgramId, name.c_str()), value);
 }
 
-void Phantom::Shader::setVec2Float(const std::string &name, float x, float y) {
+void Phantom::Graphic::Shader::setVec2Float(const std::string &name, float x, float y) {
   glUniform2f(glGetUniformLocation(ProgramId, name.c_str()), x, y);
 }
 
-void Phantom::Shader::setVec3Float(const std::string &name, float x, float y,
+void Phantom::Graphic::Shader::setVec3Float(const std::string &name, float x, float y,
                                    float z) {
   glUniform3f(glGetUniformLocation(ProgramId, name.c_str()), x, y, z);
 }
 
-void Phantom::Shader::setVec4Float(const std::string &name, float x, float y,
+void Phantom::Graphic::Shader::setVec4Float(const std::string &name, float x, float y,
                                    float z, float w) {
   glUniform4f(glGetUniformLocation(ProgramId, name.c_str()), x, y, z, w);
 }
 
-void Phantom::Shader::setDouble(const std::string &name, double value) {
+void Phantom::Graphic::Shader::setDouble(const std::string &name, double value) {
   glUniform1d(glGetUniformLocation(ProgramId, name.c_str()), value);
 }
 
-void Phantom::Shader::setVec2Double(const std::string &name, double x,
+void Phantom::Graphic::Shader::setVec2Double(const std::string &name, double x,
                                     double y) {
   glUniform2d(glGetUniformLocation(ProgramId, name.c_str()), x, y);
 }
 
-void Phantom::Shader::setVec3Double(const std::string &name, double x, double y,
+void Phantom::Graphic::Shader::setVec3Double(const std::string &name, double x, double y,
                                     double z) {
   glUniform3d(glGetUniformLocation(ProgramId, name.c_str()), x, y, z);
 }
 
-void Phantom::Shader::setVec4Double(const std::string &name, double x, double y,
+void Phantom::Graphic::Shader::setVec4Double(const std::string &name, double x, double y,
                                     double z, double w) {
   glUniform4d(glGetUniformLocation(ProgramId, name.c_str()), x, y, z, w);
 }
 
-void Phantom::Shader::setBool(const std::string &name, bool value) {
+void Phantom::Graphic::Shader::setBool(const std::string &name, bool value) {
   glUniform1i(glGetUniformLocation(ProgramId, name.c_str()), value);
 }
 
-void Phantom::Shader::setVec2Bool(const std::string &name, bool x, bool y) {
+void Phantom::Graphic::Shader::setVec2Bool(const std::string &name, bool x, bool y) {
   glUniform2i(glGetUniformLocation(ProgramId, name.c_str()), x, y);
 }
 
-void Phantom::Shader::setVec3Bool(const std::string &name, bool x, bool y,
+void Phantom::Graphic::Shader::setVec3Bool(const std::string &name, bool x, bool y,
                                   bool z) {
   glUniform3i(glGetUniformLocation(ProgramId, name.c_str()), x, y, z);
 }
 
-void Phantom::Shader::setVec4Bool(const std::string &name, bool x, bool y,
+void Phantom::Graphic::Shader::setVec4Bool(const std::string &name, bool x, bool y,
                                   bool z, bool w) {
   glUniform4i(glGetUniformLocation(ProgramId, name.c_str()), x, y, z, w);
 }
 
-unsigned int Phantom::Shader::getID() { return ProgramId; }
+unsigned int Phantom::Graphic::Shader::getID() { return ProgramId; }
 
-unsigned int Phantom::Shader::CompileShader(const char *source,
+unsigned int Phantom::Graphic::Shader::CompileShader(const char *source,
                                             GLenum TypeShader) {
   unsigned int ShaderID = 0;
   int success;
@@ -135,7 +137,7 @@ unsigned int Phantom::Shader::CompileShader(const char *source,
   return ShaderID;
 }
 
-unsigned int Phantom::Shader::CreateProgram(unsigned int FragShader,
+unsigned int Phantom::Graphic::Shader::CreateProgram(unsigned int FragShader,
                                             unsigned int VertShader) {
 
   int success;
@@ -183,4 +185,4 @@ unsigned int Phantom::Shader::CreateProgram(unsigned int FragShader,
   return shaderProgram;
 }
 
-Phantom::Shader::~Shader() { Clear(); }
+Phantom::Graphic::Shader::~Shader() { Clear(); }

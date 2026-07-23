@@ -1,10 +1,12 @@
 #include "../../include/Core/MainApplication.hpp"
 #include "../../glad/glad.h"
+#include "../../include/Core/Window.hpp"
 #include "../../include/Graphic/ElementBufferObject.hpp"
 #include "../../include/Graphic/Shader.hpp"
 #include "../../include/Graphic/VertexArrayObject.hpp"
+#include "../../include/Graphic/RenderContext.hpp"
 #include "../../include/Graphic/VertexBufferObject.hpp"
-#include "../../include/Core/Window.hpp"
+
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -31,6 +33,7 @@ int MainApplication::execute(int argc, char *argv[]) {
 
   Phantom::Window window(SCR_WIDTH, SCR_HEIGHT, "Phantom");
   window.makeContext();
+  Phantom::Graphic::RenderContext renderer;
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     std::cerr << "Failed to initialize GLAD" << std::endl;
@@ -41,74 +44,56 @@ int MainApplication::execute(int argc, char *argv[]) {
   std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
   glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 
-  // ============================================
-  // ДАННЫЕ
-  // ============================================
+
   std::vector<float> Vertices = {
-      1.0f,  1.0f,  0.0f, // 0 - правый верхний
-      1.0f,  -1.0f, 0.0f, // 1 - правый нижний
-      -1.0f, -1.0f, 0.0f, // 2 - левый нижний
-      -1.0f, 1.0f,  0.0f  // 3 - левый верхний
+      1.0f,  1.0f,  0.0f,
+      1.0f,  -1.0f, 0.0f, 
+      -1.0f, -1.0f, 0.0f,
+      -1.0f, 1.0f,  0.0f  
   };
 
   std::vector<unsigned int> Indices = {
-      0, 1, 3, // первый треугольник
-      1, 2, 3  // второй треугольник
+      0, 1, 3, 
+      1, 2, 3  
   };
 
-  // ============================================
-  // СОЗДАНИЕ БУФЕРОВ
-  // ============================================
   Phantom::Graphic::VertexArrayObject VAO;
   Phantom::Graphic::VertexBufferObject VBO;
   Phantom::Graphic::ElementBufferObject EBO;
 
-  // ✅ 1. Привязываем VAO (ЭТО ВАЖНО!)
   VAO.Bind();
 
-  // ✅ 2. Загружаем вершины в VBO
   VBO.Bind();
   VBO.ExportData(Vertices.data(),
-                 Vertices.size() * sizeof(float), // ← ПРАВИЛЬНЫЙ РАЗМЕР!
+                 Vertices.size() * sizeof(float), 
                  GL_STATIC_DRAW);
 
-  // ✅ 3. Настраиваем атрибут вершины
-  VAO.setVertexAttribute(0,                 // location
-                         3,                 // размер (x, y, z)
-                         3 * sizeof(float), // stride
-                         (void *)0          // offset
+  VAO.setVertexAttribute(0,                 
+                         3,                
+                         3 * sizeof(float), 
+                         (void *)0 
   );
 
-  // ✅ 4. Загружаем индексы в EBO
   EBO.Bind();
   EBO.ExportData(Indices.data(),
                  Indices.size() * sizeof(unsigned int) // ← ПРАВИЛЬНЫЙ РАЗМЕР!
   );
 
-  // ✅ 5. Отвязываем VAO (но EBO остаётся привязан к VAO)
   VAO.Unbind();
 
-  // ============================================
-  // ШЕЙДЕР
-  // ============================================
-  Phantom::Shader shader("../shaders/default.glsl");
+  Phantom::Graphic::Shader shader("../shaders/default.glsl");
   window.setCallbackSizeWindow(CallBackResizeWindow);
-
   shader.Using();
 
-  // ============================================
-  // ИГРОВОЙ ЦИКЛ
-  // ============================================
   while (!window.ShouldClose()) {
 
-    window.clearBackround(22.f / 255, 22.f / 255, 22.f / 255, 1.0f);
-
+    renderer.ClearColor(22.f / 255, 22.f / 255, 22.f / 255, 1.0f);
     shader.setFloat("iTime", glfwGetTime());
-    // ✅ НЕ ВЫЗЫВАЙТЕ shader.Using() повторно, если уже вызвали!
+    renderer.Draw(VAO,6,shader,Phantom::Graphic::TypeDrawing::Elements);
 
-    VAO.Bind();
-    VAO.DrawElements(6); // 6 индексов (2 треугольника × 3 вершины)
-    VAO.Unbind();
+    //VAO.Bind();
+    //VAO.DrawElements(6); // 6 индексов (2 треугольника × 3 вершины)
+    //VAO.Unbind();
 
     window.SwapBuffers();
     window.PollEvents();

@@ -12,7 +12,6 @@ void Phantom::Graphic::ElementBufferObject::UnBind() {
 
 void Phantom::Graphic::ElementBufferObject::ExportData(void *Data, size_t Size,
                                                        GLenum TypeDraw) {
-  Bind();
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, Size, Data, TypeDraw);
 }
 
@@ -25,7 +24,6 @@ unsigned int Phantom::Graphic::ElementBufferObject::getGLID() { return GLID; }
 
 Phantom::Graphic::ElementBufferObject::ElementBufferObject() {
   glGenBuffers(1, &GLID);
-  Bind();
 }
 
 Phantom::Graphic::ElementBufferObject::~ElementBufferObject() { Clear(); }
