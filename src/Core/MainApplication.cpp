@@ -88,8 +88,10 @@ int MainApplication::execute(int argc, char *argv[]) {
   while (!window.ShouldClose()) {
 
     renderer.ClearColor(22.f / 255, 22.f / 255, 22.f / 255, 1.0f);
+    renderer.ClearDepth();
+
     shader.setFloat("iTime", glfwGetTime());
-    renderer.Draw(VAO,6,shader,Phantom::Graphic::TypeDrawing::Elements);
+    renderer.DrawVAO(VAO,6,shader,Phantom::Graphic::TypeDrawing::Elements);
 
     //VAO.Bind();
     //VAO.DrawElements(6); // 6 индексов (2 треугольника × 3 вершины)

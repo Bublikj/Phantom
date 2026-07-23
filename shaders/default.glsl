@@ -17,7 +17,7 @@ uniform float iTime;
 
 void main(){
     
-    gl_Position = vec4(aPos.x, aPos.y,aPos.z, 1.0);
+    gl_Position = vec4(aPos.x*sin(iTime), aPos.y*sin(iTime),aPos.z*sin(iTime), 0.25);
     Color=aPos;
 
 };
